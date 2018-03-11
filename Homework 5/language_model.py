@@ -1,6 +1,7 @@
 from collections import *
 from random import random
 import numpy as np
+import codecs
 
 def train_char_lm(fname, order=4, add_k=1):
   ''' Trains a language model.
@@ -216,8 +217,8 @@ def set_lambdas(lms, dev_filename):
     pass
 
 def calculate_perplexity_with_backoff(lms, filename, lambdas):
-    with open(filename) as test:
-        dev=test.read()
+#    with open(filename) as test:
+    dev=codecs.open(filename, 'r', encoding='utf8', errors='replace').read()
     
     oov_prob=calculate_oov_prob(dev,lms[-1])
     
@@ -243,5 +244,5 @@ def calculate_perplexity_with_backoff(lms, filename, lambdas):
     
 if __name__ == '__main__':
   print('Training language model')
-  lm = train_char_lm("shakespeare_input.txt", order=7)
+  lm = train_char_lm("jane_austen.txt", order=2)
   #print(generate_text(lm, 4,5000))
